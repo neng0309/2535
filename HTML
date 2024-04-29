@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เปิดวิดีโอ YouTube</title>
+</head>
+<body>
+    <h1>เปิดวิดีโอ YouTube</h1>
+    
+    <!-- แทรกวิดีโอ YouTube ด้วย iframe -->
+    <div id="player"></div>
+    
+    <!-- แสดงลิงก์ของวิดีโอ -->
+    <p>แชร์ลิงก์นี้กับผู้อื่นเพื่อเปิดวิดีโอร่วมกัน:</p>
+    <input type="text" id="videoLink" size="50">
+    <button onclick="playVideo()">เปิดวิดีโอ</button>
+
+    <script>
+        function playVideo() {
+            var videoLink = document.getElementById("videoLink").value;
+            var videoId = extractVideoId(videoLink);
+            if (videoId) {
+                // สร้าง URL ของวิดีโอ YouTube
+                var youtubeUrl = "https://www.youtube.com/embed/" + videoId;
+                // แสดงวิดีโอใน iframe
+                document.getElementById("player").innerHTML = '<iframe width="560" height="315" src="' + youtubeUrl + '" frameborder="0" allowfullscreen></iframe>';
+            } else {
+                alert("กรุณาใส่ลิงก์ YouTube ให้ถูกต้อง");
+            }
+        }
+
+        // ฟังก์ชันสำหรับการแยก ID ของวิดีโอ YouTube จาก URL
+        function extractVideoId(url) {
+            var regExp = /^.*(?:youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+            var match = url.match(regExp);
+            if (match && match[1].length == 11) {
+                return match[1];
+            } else {
+                return null;
+            }
+        }
+    </script>
+</body>
+</html>
